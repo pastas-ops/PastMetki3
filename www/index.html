@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PastMetki</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&display=swap">
+<style>
+:root{--bg:#FFFDF2;--card:#fff;--en:#F1EDD9;--fg:#111;--sub:#6b6a60;--acc:#FFC400;--dn:#9a998f;--bad:#e5484d;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-t=dark]{--bg:#0E0E10;--card:#1B1B1F;--en:#26262B;--fg:#fff;--sub:#a3a39b;--dn:#5f5f64;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+input,textarea{font:inherit;color:var(--fg);background:var(--en);border:0;border-radius:12px;padding:12px;width:100%;outline:none}
+input::placeholder,textarea::placeholder{color:var(--sub)}
+.lg{font-family:Bungee,Impact,sans-serif;font-size:22px;letter-spacing:.5px;display:inline-flex;align-items:center}
+.lg b{background:var(--acc);color:#000;padding:2px 9px;border-radius:9px;margin-right:5px;font-weight:400;transform:rotate(-3deg);display:inline-block}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+.pg{max-width:640px;margin:0 auto;padding:4px 14px 110px;animation:up .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{opacity:0;transform:translateY(18px)}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes spl{from{opacity:0;transform:scale(.5) rotate(-12deg)}}
+.card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px;animation:pop .35s both}
+.btn{display:block;width:100%;margin-top:12px;background:var(--acc);color:#000;border-radius:12px;padding:13px;font-weight:700;transition:transform .1s}
+.btn:active{transform:scale(.96)}
+.row{display:flex;gap:8px;align-items:center;margin-top:8px}.row input{flex:1}
+h2{font-size:15px;color:var(--sub);margin:20px 2px 10px;display:flex;justify-content:space-between}
+h2 button{color:var(--acc);font-size:14px}
+.x{width:32px;height:32px;color:var(--sub);flex:none}
+.hd{display:flex;gap:10px;align-items:center}.tt{flex:1;font-weight:700;word-break:break-word}.sm{color:var(--sub);font-size:13px}
+.circ{width:26px;height:26px;border-radius:50%;border:2px solid var(--acc);flex:none;display:grid;place-items:center;color:#000;font-size:14px;transition:.2s}
+.circ.on{background:var(--acc)}
+.tk{display:flex;gap:10px;padding:9px 0 0 36px;cursor:pointer}
+.ck{width:20px;height:20px;border-radius:6px;border:2px solid var(--sub);flex:none;display:grid;place-items:center;font-size:12px;color:#000;transition:.2s}
+.tk.on .ck{background:var(--acc);border-color:var(--acc);transform:scale(1.1)}
+.tk.on span,.card.dn .tt{text-decoration:line-through;color:var(--dn)}.card.dn{opacity:.6}
+.bd{font-size:12px;background:var(--en);border-radius:8px;padding:2px 7px}.bd.od{background:var(--bad);color:#fff}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-around;background:var(--card);padding:8px 4px calc(8px + env(safe-area-inset-bottom,0px));z-index:6;box-shadow:0 -4px 20px #0002}
+nav button{display:flex;flex-direction:column;align-items:center;font-size:11px;color:var(--sub);padding:4px 10px;border-radius:14px;transition:.25s}
+nav button i{font-style:normal;font-size:20px}nav button.on{background:var(--acc);color:#000;font-weight:700;transform:translateY(-4px)}
+.av{border-radius:50%;background:#8b8b90;color:#fff;display:grid;place-items:center;font-weight:700;overflow:hidden;flex:none;object-fit:cover}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal div{padding:9px 0;border-radius:10px;cursor:pointer;position:relative;transition:.15s}.cal .h{color:var(--sub);font-size:12px;cursor:default}
+.cal .t{border:2px solid var(--acc)}.cal .s{background:var(--acc);color:#000}.cal .p::after{content:"";position:absolute;bottom:3px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:var(--bad)}
+.fab{position:fixed;right:18px;bottom:calc(92px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;background:var(--acc);color:#000;font-size:30px;box-shadow:0 6px 18px #0004;z-index:7;animation:pop .4s .2s both}
+.msg{display:flex;gap:8px;margin:8px 0;animation:pop .3s both}.msg.me{flex-direction:row-reverse}
+.bb{max-width:78%;background:var(--card);border-radius:16px;padding:9px 12px}.me .bb{background:var(--acc);color:#000}
+.me .ck{border-color:#000}.me .tk.on .ck{background:#000;color:var(--acc)}
+.comp{position:sticky;bottom:86px;display:flex;gap:8px;align-items:flex-end;margin-top:12px}.comp textarea{flex:1;resize:none;height:46px}.comp button{width:46px;height:46px;border-radius:50%;background:var(--acc);color:#000;font-size:20px}
+.auth{max-width:380px;margin:0 auto;padding:40px 20px;text-align:center}.auth .lg{font-size:38px;animation:spl .7s cubic-bezier(.2,.9,.3,1.3)}
+.auth form>*,.auth .in{margin-top:10px;animation:up .5s both}.err{color:var(--bad);font-size:14px;min-height:20px}
+.lk{color:var(--acc);margin-top:16px}
+dialog{border:0;border-radius:20px;background:var(--card);color:var(--fg);width:min(92vw,380px);padding:20px}dialog[open]{animation:pop .3s}dialog::backdrop{background:#0009}
+label{display:flex;gap:10px;align-items:center;padding:7px 0}label input{width:auto}
+.dv{text-align:center;color:var(--sub);font-size:12px;margin:14px 0}
+</style></head><body><div id="app"></div>
+<dialog id="dlg"></dialog>
+<script>
+const K='pm',$=s=>document.querySelector(s),app=$('#app');
+let S={users:{},chats:{},session:null};try{Object.assign(S,JSON.parse(localStorage.getItem(K)))}catch(e){}
+const sv=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}},E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const H=async(s,p)=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s+p)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+const me=()=>S.users[S.session],ym=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),today=()=>ym(new Date());
+const rnd=()=>Math.random().toString(36).slice(2,10).toUpperCase(),ck=(a,b)=>[a,b].sort().join('|');
+let tab='n',reg=false,err='',dr={t:'',i:[''],d:''},cm=new Date(),sd=null,ch=null,msg='',fi=null;
+const av=(u,z)=>u&&u.av?`<img class="av" style="width:${z}px;height:${z}px" src="${u.av}">`:`<div class="av" style="width:${z}px;height:${z}px;font-size:${z/2.3}px">${u?E(u.name[0]||'?').toUpperCase():''}</div>`;
+const LG='<span class="lg"><b>Past</b>Metki</span>';
+
+function V(){
+ if(!me())return`<div class="auth">${LG}<p class="in sm">${reg?'Создайте аккаунт':'Войдите, чтобы пользоваться'}</p><form onsubmit="return false">${reg?'<input id="a0" placeholder="Имя">':''}<input id="a1" placeholder="Логин" autocapitalize="off"><input id="a2" type="password" placeholder="Пароль">${reg?'<input id="a3" type="password" placeholder="Повторите пароль">':''}<div class="err">${E(err)}</div><button class="btn" data-a="auth">${reg?'Зарегистрироваться':'Войти'}</button></form><button class="lk" data-a="sw">${reg?'Уже есть аккаунт? Войти':'Нет аккаунта? Регистрация'}</button></div>`;
+ const u=me(),T=[['n','📝','Заметки'],['c','📅','Календарь'],['s','💬','SovMetki'],['h','🕘','История'],['u','👤','Аккаунт']];
+ return`<header>${LG}<button data-a="tab" data-i="u">${av(u,34)}</button></header><main class="pg" id="pg${tab}${ch||''}">${{n:N,c:C,s:SM,h:HI,u:AC}[tab]()}</main>${tab==='s'&&!ch?'<button class="fab" data-a="addf">+</button>':''}<nav>${T.map(t=>`<button class="${tab===t[0]?'on':''}" data-a="tab" data-i="${t[0]}"><i>${t[1]}</i>${t[2]}</button>`).join('')}</nav>`}
+
+function card(x){const od=x.due&&!x.done&&x.due<today();return`<div class="card ${x.done?'dn':''}"><div class="hd"><button class="circ ${x.done?'on':''}" data-a="circ" data-i="${x.id}">${x.done?'✓':''}</button><div class="tt">${E(x.title)}</div>${x.due?`<span class="bd ${od?'od':''}">📅 ${x.due.slice(8)}.${x.due.slice(5,7)}</span>`:''}${me().s.tm?`<span class="sm">${x.time}</span>`:''}<button class="x" data-a="del" data-i="${x.id}">✕</button></div>${x.tasks.map((t,j)=>`<div class="tk ${t.done?'on':''}" data-a="tk" data-i="${x.id}" data-j="${j}"><div class="ck">${t.done?'✓':''}</div><span>${E(t.text)}</span></div>`).join('')}</div>`}
+const sorted=l=>[...l.filter(x=>!x.done),...l.filter(x=>x.done)];
+function N(){const u=me();return`<div class="card"><input data-m="t" placeholder="Название группы (например, Завтра)" value="${E(dr.t)}">${dr.i.map((v,j)=>`<div class="row"><span style="color:var(--acc)">●</span><input data-m="i" data-j="${j}" placeholder="Пункт" value="${E(v)}"><button class="x" data-a="di" data-j="${j}">✕</button></div>`).join('')}<div class="row"><span>📅</span><input type="date" data-m="d" value="${dr.d}" min="${today()}"></div><button class="btn" data-a="add">+ Добавить заметку</button></div><h2>Все напоминания</h2>${u.notes.length?sorted(u.notes).map(card).join(''):'<p class="sm" style="text-align:center">Пока пусто</p>'}`}
+function C(){const u=me(),y=cm.getFullYear(),m=cm.getMonth(),f=(new Date(y,m,1).getDay()+6)%7,n=new Date(y,m+1,0).getDate();let g='';for(const d of'ПВСЧПСВ')g+=`<div class="h">${d}</div>`;for(let i=0;i<f;i++)g+='<div></div>';for(let d=1;d<=n;d++){const k=ym(new Date(y,m,d));g+=`<div class="${k===today()?'t ':''}${k===sd?'s ':''}${u.notes.some(x=>x.due===k&&!x.done)?'p':''}" data-a="day" data-i="${k}">${d}</div>`}
+ const l=sd?u.notes.filter(x=>x.due===sd):u.notes.filter(x=>x.due&&!x.done).sort((a,b)=>a.due<b.due?-1:1);
+ return`<div class="card"><div class="hd"><button class="x" data-a="mo" data-i="-1">◀</button><div class="tt" style="text-align:center">${cm.toLocaleString('ru',{month:'long',year:'numeric'})}</div><button class="x" data-a="mo" data-i="1">▶</button></div><div class="cal" style="margin-top:10px">${g}</div></div><h2>${sd?'Дедлайны на '+sd.split('-').reverse().join('.'):'Ближайшие дедлайны'}${sd?'<button data-a="day" data-i="">Все</button>':''}</h2>${l.length?l.map(card).join(''):'<p class="sm" style="text-align:center">Нет дедлайнов</p>'}`}
+function SM(){const u=me();
+ if(!ch)return u.fr.length?u.fr.map(f=>{const F=S.users[f],c=S.chats[ck(u.login,f)]||[],l=c[c.length-1];return`<div class="card hd" data-a="chat" data-i="${f}" style="cursor:pointer">${av(F,46)}<div class="tt">${E(F.name)}<div class="sm">${l?E(l.x):'@'+F.login}</div></div></div>`}).join(''):'<p class="sm" style="text-align:center;margin-top:60px">Друзей пока нет.<br>Нажмите «+», чтобы добавить.</p>';
+ const F=S.users[ch],c=S.chats[ck(u.login,ch)]||[],d=c.filter(m=>m.dn),o=c.filter(m=>!m.dn);
+ const B=m=>`<div class="msg ${m.f===u.login?'me':''}">${av(S.users[m.f],30)}<div class="bb"><div class="hd"><button class="circ" style="border-color:${m.f===u.login?'#000':'var(--acc)'};${m.dn?'background:currentColor':''}" data-a="mc" data-i="${m.id}">${m.dn?'<span style="color:var(--acc)">✓</span>':''}</button><b>${E(m.x)}</b></div>${m.k.map((t,j)=>`<div class="tk ${t.done?'on':''}" style="padding-left:0" data-a="mt" data-i="${m.id}" data-j="${j}"><div class="ck">${t.done?'✓':''}</div><span>${E(t.text)}</span></div>`).join('')}<div class="sm" style="text-align:right">${m.t}</div></div></div>`;
+ return`<div class="hd"><button class="x" data-a="back">◀</button>${av(F,36)}<div class="tt">${E(F.name)}</div><button class="x" data-a="clr">🗑</button></div>${d.length?`<div class="dv">— история: выполненные —</div>${d.map(B).join('')}<div class="dv">— активные —</div>`:''}${o.map(B).join('')||'<p class="sm" style="text-align:center">Напишите первую заметку</p>'}<div class="comp"><textarea data-m="ms" placeholder="Заголовок, со следующих строк — пункты">${E(msg)}</textarea><button data-a="send">➤</button></div>`}
+function HI(){const u=me();return`<h2>История заметок (до 50)<button data-a="ch">Очистить</button></h2>${u.hist.length?u.hist.map((x,i)=>`<div class="card" data-a="hl" data-i="${i}" style="cursor:pointer"><b>${E(x.title)}</b><div class="sm">${x.tasks.length?E(x.tasks.slice(0,3).join(', '))+(x.tasks.length>3?` ... и еще ${x.tasks.length-3}`:''):'Заметка без пунктов'}</div></div>`).join(''):'<p class="sm" style="text-align:center">История пуста</p>'}`}
+function AC(){const u=me(),s=u.s;return`<div class="card" style="text-align:center"><div style="display:flex;justify-content:center">${av(u,96)}</div><b style="display:block;margin-top:8px">${E(u.name)}</b><div class="sm">@${E(u.login)}</div><button class="btn" data-a="ph" style="background:var(--en);color:var(--fg)">Сменить аватар</button><input type="file" id="fl" accept="image/*" hidden></div>
+<div class="card"><b>Настройки</b><label><input type="radio" name="ac" data-m="ac" value="g" ${s.a=='g'?'checked':''}>Главная галочка: серая и вниз</label><label><input type="radio" name="ac" data-m="ac" value="d" ${s.a=='d'?'checked':''}>Главная галочка: удалить</label><label><input type="checkbox" data-m="tm" ${s.tm?'checked':''}>Показывать время создания</label><label><input type="checkbox" data-m="th" ${s.th=='dark'?'checked':''}>Тёмная тема</label></div>
+<div class="card"><b>Сменить логин</b><div class="row"><input id="nl" placeholder="Новый логин"></div><div class="row"><input id="np" type="password" placeholder="Пароль для подтверждения"></div><div class="err">${E(err)}</div><button class="btn" data-a="cl">Сменить</button></div><button class="btn" data-a="out" style="background:var(--en);color:var(--fg)">Выйти</button>`}
+
+function R(){document.documentElement.dataset.t=me()?me().s.th:'dark';const y=scrollY;app.innerHTML=V();if(fi!=null){const e=$(`[data-m=i][data-j="${fi}"]`);e&&e.focus();fi=null}if(tab==='s'&&ch)scrollTo(0,1e6);else scrollTo(0,y)}
+const nu=()=>({notes:[],hist:[],fr:[],s:{a:'g',tm:1,th:'dark'}}),OK=/^[\wа-яё.]{3,20}$/i;
+async function auth(){const l=$('#a1').value.trim().toLowerCase(),p=$('#a2').value;err='';
+ if(reg){const n=$('#a0').value.trim(),p2=$('#a3').value;if(!n||!l||!p)err='Заполните все поля';else if(!OK.test(l))err='Логин: 3–20 символов, буквы/цифры/_ .';else if(S.users[l])err='Логин уже занят';else if(p.length<4)err='Пароль минимум 4 символа';else if(p!==p2)err='Пароли не совпадают';
+  if(!err){const salt=rnd();S.users[l]={name:n,login:l,salt,hash:await H(salt,p),...nu()};S.session=l;sv();tab='n'}}
+ else{const u=S.users[l];if(!u||u.hash!==await H(u.salt,p))err='Неверный логин или пароль';else{S.session=l;sv();tab='n'}}
+ if(me()&&location.hash.startsWith('#inv-'))inv(location.hash.slice(5));R()}
+function inv(c){const o=Object.values(S.users).find(u=>u.inv===c&&u.login!==S.session);if(o)link(o.login);return!!o}
+function link(l){const u=me(),o=S.users[l];if(!o||l===u.login)return false;[[u,l],[o,u.login]].forEach(([a,b])=>{if(!a.fr.includes(b))a.fr.push(b)});sv();return true}
+function done(x){x.done=x.tasks.length>0&&x.tasks.every(t=>t.done)}
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,i=b.dataset.i,j=+b.dataset.j,u=me(),nt=u&&u.notes.find(x=>x.id==i);
+ if(a==='sw'){reg=!reg;err=''}
+ else if(a==='auth')return auth();
+ else if(a==='tab'){tab=i;ch=null;err=''}
+ else if(a==='add'){const tasks=dr.i.map(s=>s.trim()).filter(Boolean).map(text=>({text,done:false})),title=dr.t.trim()||'Заметка';u.notes.unshift({id:Date.now(),title,tasks,done:false,due:dr.d,time:new Date().toTimeString().slice(0,5)});const k=JSON.stringify([title,tasks.map(t=>t.text)]);u.hist=u.hist.filter(h=>JSON.stringify([h.title,h.tasks])!==k);u.hist.unshift({title,tasks:tasks.map(t=>t.text)});u.hist=u.hist.slice(0,50);dr={t:'',i:[''],d:''};sv()}
+ else if(a==='di'){dr.i.splice(j,1);if(!dr.i.length)dr.i=['']}
+ else if(a==='circ'){if(u.s.a==='d')u.notes=u.notes.filter(x=>x!==nt);else{nt.done=!nt.done;nt.tasks.forEach(t=>t.done=nt.done)}sv()}
+ else if(a==='del'){u.notes=u.notes.filter(x=>x!==nt);sv()}
+ else if(a==='tk'){nt.tasks[j].done=!nt.tasks[j].done;done(nt);sv()}
+ else if(a==='mo')cm=new Date(cm.getFullYear(),cm.getMonth()+ +i,1);
+ else if(a==='day')sd=i||null;
+ else if(a==='hl'){const h=u.hist[i];dr={t:h.title,i:h.tasks.length?[...h.tasks]:[''],d:''};tab='n'}
+ else if(a==='ch'){u.hist=[];sv()}
+ else if(a==='chat')ch=i;else if(a==='back')ch=null;
+ else if(a==='clr'){if(confirm('Очистить чат полностью?')){delete S.chats[ck(u.login,ch)];sv()}}
+ else if(a==='send'||a==='sendk'){const L=msg.split('\n').map(s=>s.trim()).filter(Boolean);if(L.length){const c=ck(u.login,ch);(S.chats[c]=S.chats[c]||[]).push({id:Date.now(),f:u.login,x:L[0],k:L.slice(1).map(text=>({text,done:false})),t:new Date().toTimeString().slice(0,5),dn:false});msg='';sv()}}
+ else if(a==='mc'||a==='mt'){const m=S.chats[ck(u.login,ch)].find(m=>m.id==i);if(a==='mt'){m.k[j].done=!m.k[j].done;m.dn=m.k.every(t=>t.done)}else{m.dn=!m.dn;m.k.forEach(t=>t.done=m.dn)}sv()}
+ else if(a==='addf'){u.inv=u.inv||rnd();sv();const d=$('#dlg');d.innerHTML=`<b>Добавить друга</b><div class="row"><input id="fl2" placeholder="Логин или код приглашения"></div><div class="err" id="fe"></div><button class="btn" data-a="fadd">Добавить</button><p class="sm">Ваш код: <b>${u.inv}</b><br>Ссылка: ${E(location.href.split('#')[0])}#inv-${u.inv}</p><button class="btn" style="background:var(--en);color:var(--fg)" data-a="fx">Закрыть</button>`;d.showModal();return}
+ else if(a==='fadd'){const v=$('#fl2').value.trim().toLowerCase(),c=v.toUpperCase();if(link(v)||inv(c)){$('#dlg').close()}else{$('#fe').textContent='Пользователь не найден';return}}
+ else if(a==='fx'){$('#dlg').close();return}
+ else if(a==='ph'){$('#fl').click();return}
+ else if(a==='cl'){const n=$('#nl').value.trim().toLowerCase();err='';if(!OK.test(n))err='Логин: 3–20 символов';else if(S.users[n])err='Логин уже занят';else if(u.hash!==await H(u.salt,$('#np').value))err='Неверный пароль';
+  if(!err){const o=u.login;delete S.users[o];u.login=n;S.users[n]=u;Object.values(S.users).forEach(x=>x.fr=x.fr.map(f=>f===o?n:f));for(const k of Object.keys(S.chats)){const p=k.split('|');if(p.includes(o)){S.chats[ck(...p.map(x=>x===o?n:x))]=S.chats[k].map(m=>({...m,f:m.f===o?n:m.f}));delete S.chats[k]}}S.session=n;sv()}}
+ else if(a==='out'){S.session=null;sv();reg=false}
+ R()});
+document.addEventListener('input',e=>{const m=e.target.dataset.m;if(!m)return;const u=me(),t=e.target;
+ if(m==='t')dr.t=t.value;else if(m==='i')dr.i[+t.dataset.j]=t.value;else if(m==='d')dr.d=t.value;else if(m==='ms')msg=t.value;
+ else if(m==='ac'){u.s.a=t.value;sv()}else if(m==='tm'){u.s.tm=t.checked?1:0;sv()}else if(m==='th'){u.s.th=t.checked?'dark':'light';sv();R()}});
+document.addEventListener('keydown',e=>{const t=e.target;if(t.dataset.m==='i'){const j=+t.dataset.j;if(e.key==='Enter'){e.preventDefault();dr.i.splice(j+1,0,'');fi=j+1;R()}else if(e.key==='Backspace'&&!t.value&&dr.i.length>1){e.preventDefault();dr.i.splice(j,1);fi=Math.max(0,j-1);R()}}
+ else if(t.dataset.m==='ms'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();t.parentNode.querySelector('button').click()}});
+document.addEventListener('change',e=>{if(e.target.id!=='fl')return;const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d'),s=Math.min(im.width,im.height);x.drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,128,128);me().av=c.toDataURL('image/jpeg',.8);sv();R()};im.src=r.result};r.readAsDataURL(f)});
+R();
+</script></body></html>
